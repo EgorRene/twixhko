@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Twitch-плеер | Смотри любые стримы</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0e0e12;
+            font-family: system-ui, 'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+
+        .glass-card {
+            max-width: 1300px;
+            width: 100%;
+            background: rgba(20, 22, 36, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(145, 71, 255, 0.3);
+            transition: all 0.2s;
+        }
+
+        h1 {
+            font-size: 1.9rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #fff, #b4adff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        h1 span {
+            background: #1f1c3a;
+            font-size: 0.8rem;
+            padding: 4px 12px;
+            border-radius: 40px;
+            color: #b9b3ff;
+            font-weight: normal;
+        }
+
+        .sub {
+            color: #9ca3af;
+            margin: 0.5rem 0 1.8rem 0;
+            border-left: 3px solid #6441a5;
+            padding-left: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .input-panel {
+            background: #0b0b12;
+            border-radius: 1.5rem;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 2rem;
+            border: 1px solid #2a2a3a;
+        }
+
+        .flex-input {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            align-items: center;
+        }
+
+        .channel-input {
+            flex: 3;
+            background: #18181b;
+            border: 1px solid #3a3a4a;
+            padding: 14px 20px;
+            border-radius: 60px;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+            transition: 0.2s;
+            font-family: monospace;
+        }
+
+        .channel-input:focus {
+            border-color: #9147ff;
+            box-shadow: 0 0 0 3px rgba(145, 71, 255, 0.25);
+            background: #0f0f14;
+        }
+
+        .load-btn {
+            background: #9147ff;
+            border: none;
+            padding: 14px 32px;
+            border-radius: 60px;
+            font-weight: 600;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .load-btn:hover {
+            background: #772ce8;
+            transform: scale(1.02);
+        }
+
+        .player-area {
+            background: #000000;
+            border-radius: 1.5rem;
+            overflow: hidden;
+            box-shadow: 0 20px 30px -12px black;
+            margin-bottom: 1rem;
+            aspect-ratio: 16 / 9;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+            background: #0f0f17;
+            padding: 0.8rem 1.2rem;
+            border-radius: 1rem;
+            font-size: 0.8rem;
+            color: #b4b4cc;
+            margin-top: 12px;
+        }
+
+        .badge {
+            background: #1e1a2f;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-family: monospace;
+            color: #cbb9ff;
+        }
+
+        .example-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 14px;
+        }
+
+        .ex-btn {
+            background: #1e1a2f;
+            border: 1px solid #36334a;
+            padding: 6px 16px;
+            border-radius: 60px;
+            font-size: 0.75rem;
+            color: #cabfff;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+
+        .ex-btn:hover {
+            background: #2e2a45;
+            border-color: #9147ff;
+            color: white;
+        }
+
+        .note {
+            font-size: 0.7rem;
+            text-align: center;
+            margin-top: 1.2rem;
+            color: #6b6b8b;
+        }
+
+        @media (max-width: 640px) {
+            .glass-card { padding: 1rem; }
+            .load-btn { padding: 12px 20px; }
+        }
+    </style>
+</head>
+<body>
+<div class="glass-card">
+    <h1>
+        🎮 Twitch·PURE 
+        <span>встраиваемый плеер</span>
+    </h1>
+    <div class="sub">Вставьте имя любого канала — и смотрите стрим в удобном окне, без лишнего интерфейса Twitch</div>
+
+    <div class="input-panel">
+        <div class="flex-input">
+            <input type="text" id="channelName" class="channel-input" placeholder="Например: sodapoppin, shroud, lirik, robot_obormot или любой другой канал">
+            <button id="watchBtn" class="load-btn">▶ Смотреть сейчас</button>
+        </div>
+        <div class="example-buttons">
+            <span style="color:#6c6f8c; font-size:0.7rem; align-self:center;">⭐ Популярные примеры:</span>
+            <button class="ex-btn" data-channel="sodapoppin">sodapoppin</button>
+            <button class="ex-btn" data-channel="shroud">shroud</button>
+            <button class="ex-btn" data-channel="lirik">lirik</button>
+            <button class="ex-btn" data-channel="gaules">gaules</button>
+            <button class="ex-btn" data-channel="robot_obormot">robot_obormot</button>
+        </div>
+    </div>
+
+    <div class="player-area" id="playerContainer">
+        <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: #0a0a0f; color: #6b6b8f; flex-direction: column; gap: 12px;">
+            <div style="font-size: 3rem;">🎴</div>
+            <div style="font-size: 0.9rem;">Введите имя канала и нажмите «Смотреть сейчас»</div>
+            <div style="font-size: 0.7rem;">— стрим откроется здесь, —</div>
+        </div>
+    </div>
+
+    <div class="info-bar">
+        <div>🔐 <strong>Безопасный режим</strong> — используется <span class="badge">player.twitch.tv</span></div>
+        <div>⚡ <strong>Нет рекламы на встройке</strong> (отключается стандартная навигация)</div>
+        <div>🎯 <strong>Любой канал</strong> — просто введите никнейм</div>
+    </div>
+    <div class="note">
+        ⚠️ Примечание: если канал офлайн — вы увидите сообщение от Twitch. Если стрим идёт — плеер покажет его сразу.<br>
+        🛠️ Для корректной работы в современных браузерах: при локальном открытии файла может потребоваться разрешить «незащищённый контент» или загрузить этот HTML на любой хостинг (GitHub Pages / любой другой).<br>
+        🧪 Совет: при ошибке «Этот объект настроен неправильно» — попробуйте другой браузер (Edge, Firefox) или загрузите файл на бесплатный хостинг (GitHub Pages).
+    </div>
+</div>
+
+<script>
+    (function() {
+        const channelInput = document.getElementById('channelName');
+        const watchBtn = document.getElementById('watchBtn');
+        const playerContainer = document.getElementById('playerContainer');
+        const exampleBtns = document.querySelectorAll('.ex-btn');
+
+        // Функция очистки ника: оставляем только латиницу, цифры и нижнее подчёркивание
+        function cleanChannelName(raw) {
+            let cleaned = raw.trim().toLowerCase();
+            // убираем https://, www.twitch.tv/ и тп
+            if (cleaned.includes('twitch.tv')) {
+                const match = cleaned.match(/(?:twitch\.tv\/)([a-zA-Z0-9_]+)/);
+                if (match && match[1]) return match[1];
+            }
+            // убираем косые черты, параметры и всё лишнее
+            cleaned = cleaned.replace(/https?:\/\//i, '').replace(/www\./i, '');
+            cleaned = cleaned.split('/')[0].split('?')[0].split('&')[0];
+            // разрешённые символы для ника twitch
+            cleaned = cleaned.replace(/[^a-z0-9_]/g, '');
+            return cleaned;
+        }
+
+        // генерация плеера с правильным PARENT (пытаемся взять текущий домен / localhost / file)
+        function getParentDomain() {
+            try {
+                // если открыто не из файловой системы — берём хостнейм
+                if (window.location.hostname && window.location.hostname !== '') {
+                    return window.location.hostname;
+                }
+            } catch(e) {}
+            // fallback для локального html: localhost  (часто помогает при локальном тесте)
+            return 'localhost';
+        }
+
+        function loadStream(channel) {
+            const cleanChannel = cleanChannelName(channel);
+            if (!cleanChannel) {
+                playerContainer.innerHTML = `
+                    <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: #0a0a0f; color: #ff8a7a; flex-direction: column;">
+                        <div style="font-size: 2rem;">⚠️</div>
+                        <div>Некорректное имя канала. Попробуйте например: shroud, loltyler1, c9</div>
+                    </div>
+                `;
+                return;
+            }
+
+            // Получаем parent-домен (важно для избежания ошибки «неправильно настроен»)
+            const parentDomain = getParentDomain();
+            
+            // Используем официальный Twitch iframe плеер с параметром parent
+            // Добавляем autoplay=true для попытки автоматического запуска
+            const embedUrl = `https://player.twitch.tv/?channel=${cleanChannel}&parent=${parentDomain}&autoplay=true&muted=false`;
+            
+            // Альтернативный fallback: если не работает, можно использовать ?parent=localhost (но берём текущий)
+            // Также добавим обработку на случай, если плеер не загрузится
+            const iframe = document.createElement('iframe');
+            iframe.src = embedUrl;
+            iframe.allow = "autoplay; encrypted-media; fullscreen; picture-in-picture; web-share";
+            iframe.allowFullscreen = true;
+            iframe.title = `Twitch стрим — ${cleanChannel}`;
+            iframe.setAttribute('frameborder', '0');
+            iframe.setAttribute('scrolling', 'no');
+            
+            // Очищаем контейнер и добавляем плеер
+            playerContainer.innerHTML = '';
+            playerContainer.appendChild(iframe);
+            
+            // также показываем в инфо-зоне какой канал загружен (кратко)
+            const existingNote = document.querySelector('.info-bar');
+            // необязательно, просто дружелюбно
+        }
+
+        // Обработчик кнопки
+        watchBtn.addEventListener('click', () => {
+            const rawChannel = channelInput.value;
+            if (!rawChannel.trim()) {
+                playerContainer.innerHTML = `
+                    <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: #0a0a0f; color: #ffaa77; flex-direction: column;">
+                        <div style="font-size: 2rem;">🎙️</div>
+                        <div>Введите имя канала! Например: summit1g, ninja, или любой другой стример</div>
+                    </div>
+                `;
+                return;
+            }
+            loadStream(rawChannel);
+        });
+
+        // Примеры по кнопкам
+        exampleBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const channelExample = btn.getAttribute('data-channel');
+                if (channelExample) {
+                    channelInput.value = channelExample;
+                    loadStream(channelExample);
+                }
+            });
+        });
+
+        // Поддержка Enter
+        channelInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                watchBtn.click();
+            }
+        });
+        
+        // при загрузке страницы в поле можно оставить пустым — ничего не загружаем. Но если кто-то захочет, ок.
+        // дополнительная фича: если в URL параметр ?channel=
+        const urlParams = new URLSearchParams(window.location.search);
+        const autoChannel = urlParams.get('channel');
+        if (autoChannel) {
+            channelInput.value = autoChannel;
+            loadStream(autoChannel);
+        }
+    })();
+</script>
+</body>
+</html>
