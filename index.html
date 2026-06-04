@@ -3,351 +3,1047 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Twitch-плеер | Смотри любые стримы</title>
+    <title>TRANSFERBIZ PRO + РенИИ / Админ ИИ</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background: #0e0e12;
-            font-family: system-ui, 'Segoe UI', 'Inter', -apple-system, BlinkMacSystemFont, 'Roboto', sans-serif;
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 24px;
-        }
-
-        .glass-card {
-            max-width: 1300px;
-            width: 100%;
-            background: rgba(20, 22, 36, 0.85);
-            backdrop-filter: blur(12px);
-            border-radius: 2rem;
-            padding: 2rem;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
-            border: 1px solid rgba(145, 71, 255, 0.3);
-            transition: all 0.2s;
-        }
-
-        h1 {
-            font-size: 1.9rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #fff, #b4adff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: -0.3px;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        h1 span {
-            background: #1f1c3a;
-            font-size: 0.8rem;
-            padding: 4px 12px;
-            border-radius: 40px;
-            color: #b9b3ff;
-            font-weight: normal;
-        }
-
-        .sub {
-            color: #9ca3af;
-            margin: 0.5rem 0 1.8rem 0;
-            border-left: 3px solid #6441a5;
-            padding-left: 1rem;
-            font-size: 0.9rem;
-        }
-
-        .input-panel {
-            background: #0b0b12;
-            border-radius: 1.5rem;
-            padding: 1.2rem 1.5rem;
-            margin-bottom: 2rem;
-            border: 1px solid #2a2a3a;
-        }
-
-        .flex-input {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 14px;
-            align-items: center;
-        }
-
-        .channel-input {
-            flex: 3;
-            background: #18181b;
-            border: 1px solid #3a3a4a;
-            padding: 14px 20px;
-            border-radius: 60px;
-            color: white;
-            font-size: 1rem;
-            outline: none;
-            transition: 0.2s;
-            font-family: monospace;
-        }
-
-        .channel-input:focus {
-            border-color: #9147ff;
-            box-shadow: 0 0 0 3px rgba(145, 71, 255, 0.25);
-            background: #0f0f14;
-        }
-
-        .load-btn {
-            background: #9147ff;
-            border: none;
-            padding: 14px 32px;
-            border-radius: 60px;
-            font-weight: 600;
-            color: white;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: 0.2s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .load-btn:hover {
-            background: #772ce8;
-            transform: scale(1.02);
-        }
-
-        .player-area {
-            background: #000000;
-            border-radius: 1.5rem;
-            overflow: hidden;
-            box-shadow: 0 20px 30px -12px black;
-            margin-bottom: 1rem;
-            aspect-ratio: 16 / 9;
-        }
-
-        iframe {
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .info-bar {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 12px;
-            background: #0f0f17;
-            padding: 0.8rem 1.2rem;
-            border-radius: 1rem;
-            font-size: 0.8rem;
-            color: #b4b4cc;
-            margin-top: 12px;
-        }
-
-        .badge {
-            background: #1e1a2f;
-            padding: 4px 12px;
-            border-radius: 30px;
-            font-family: monospace;
-            color: #cbb9ff;
-        }
-
-        .example-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-top: 14px;
-        }
-
-        .ex-btn {
-            background: #1e1a2f;
-            border: 1px solid #36334a;
-            padding: 6px 16px;
-            border-radius: 60px;
-            font-size: 0.75rem;
-            color: #cabfff;
-            cursor: pointer;
-            transition: 0.1s;
-        }
-
-        .ex-btn:hover {
-            background: #2e2a45;
-            border-color: #9147ff;
-            color: white;
-        }
-
-        .note {
-            font-size: 0.7rem;
-            text-align: center;
-            margin-top: 1.2rem;
-            color: #6b6b8b;
-        }
-
-        @media (max-width: 640px) {
-            .glass-card { padding: 1rem; }
-            .load-btn { padding: 12px 20px; }
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, 'Segoe UI', sans-serif; }
+        body { background: #0a0f1c; min-height: 100vh; }
+        .app-wrapper { max-width: 1400px; margin: 0 auto; background: #fff; min-height: 100vh; display: flex; flex-direction: column; }
+        .header { background: #0a1a2e; color: white; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; border-bottom: 2px solid #f5b042; }
+        .logo h1 { font-size: 1.5rem; }
+        .logo p { font-size: 0.65rem; opacity: 0.7; }
+        .user-mode { background: #1e3a5a; padding: 5px 12px; border-radius: 40px; font-size: 0.7rem; display: flex; gap: 10px; align-items: center; }
+        .header-buttons { display: flex; gap: 8px; }
+        .side-menu { background: #f5f7fc; border-right: 1px solid #dce4ec; width: 280px; padding: 16px 0; overflow-y: auto; max-height: calc(100vh - 120px); }
+        .side-menu a { display: block; padding: 10px 20px; color: #1e4663; text-decoration: none; font-weight: 500; border-left: 3px solid transparent; cursor: pointer; font-size: 0.85rem; }
+        .side-menu a.active { background: #e9eef5; border-left-color: #f5b042; font-weight: 700; }
+        .flex-row { display: flex; flex: 1; }
+        .content-area { flex: 1; padding: 20px 24px; overflow-y: auto; }
+        .info-card { background: #fff; border-radius: 20px; padding: 18px; margin-bottom: 20px; border: 1px solid #eef2f8; }
+        button { background: #1d4e6e; border: none; color: white; padding: 6px 14px; border-radius: 40px; cursor: pointer; margin: 4px; font-size: 0.75rem; }
+        button:hover { background: #2a6a8e; }
+        button.danger { background: #8b3c2c; }
+        button.success { background: #2a6b4e; }
+        button.warning { background: #f5b042; color: #1a1a2e; }
+        input, select, textarea { padding: 6px 10px; border-radius: 40px; border: 1px solid #cbd5e6; margin: 4px; font-size: 0.75rem; }
+        .league-table { width: 100%; border-collapse: collapse; font-size: 0.75rem; }
+        .league-table th, .league-table td { padding: 8px 6px; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        .club-name-link { cursor: pointer; color: #1d4e6e; font-weight: 600; text-decoration: underline; }
+        .club-name-link:hover { color: #f5b042; }
+        .clubs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 14px; margin-top: 12px; }
+        .club-card { background: #fafcff; border-radius: 16px; border: 1px solid #e2e9f2; padding: 12px; cursor: pointer; transition: 0.1s; display: flex; gap: 12px; align-items: center; }
+        .club-card:hover { transform: translateY(-2px); box-shadow: 0 4px 10px rgba(0,0,0,0.05); background: #f0f5ff; }
+        .club-emblem-small { width: 50px; height: 50px; object-fit: cover; border-radius: 12px; background: #eef2f8; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); z-index: 2000; overflow: auto; }
+        .modal-content { background: white; max-width: 1200px; margin: 30px auto; border-radius: 24px; padding: 24px; }
+        .players-table { width: 100%; border-collapse: collapse; font-size: 0.7rem; }
+        .players-table th { background: #f0f3f8; padding: 8px 6px; text-align: left; }
+        .players-table td { padding: 6px; border-bottom: 1px solid #eef2f7; vertical-align: middle; }
+        .player-photo { width: 40px; height: 40px; object-fit: cover; border-radius: 50%; }
+        .admin-row { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 20px; padding: 16px; background: #f0f3f8; border-radius: 20px; }
+        .admin-card { flex: 1; min-width: 220px; background: white; padding: 12px; border-radius: 16px; }
+        .league-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; padding: 5px 10px; background: #f0f3f8; border-radius: 12px; }
+        .news-item { background: #fafcff; border-radius: 16px; padding: 12px; margin-bottom: 12px; border: 1px solid #eef2f8; }
+        .highlights-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 20px; margin-top: 12px; }
+        .highlight-card { background: #fafcff; border-radius: 16px; border: 1px solid #e2e9f2; overflow: hidden; }
+        .highlight-video { width: 100%; aspect-ratio: 16/9; background: #000; border: none; }
+        .highlight-caption { padding: 8px 12px; font-size: 0.75rem; background: #f5f7fc; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+        .add-methods { display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+        .method-tab { flex: 1; text-align: center; padding: 8px; cursor: pointer; border-radius: 40px; background: #eef2f8; transition: 0.2s; }
+        .method-tab.active { background: #1d4e6e; color: white; }
+        .method-panel { display: none; }
+        .method-panel.active { display: block; }
+        .progress-bar-container { background: #e2e8f0; border-radius: 20px; height: 8px; width: 100%; margin-top: 8px; overflow: hidden; }
+        .progress-bar-fill { background: #2a6b4e; width: 0%; height: 100%; transition: width 0.3s; border-radius: 20px; }
+        footer { text-align: center; padding: 12px; font-size: 0.65rem; background: #fafcff; border-top: 1px solid #eef2f8; }
+        @media (max-width: 760px) { .side-menu { width: 200px; } }
+        .edit-stats-btn { background: #f5b042; color: #1a1a2e; padding: 3px 8px; font-size: 0.7rem; margin-left: 10px; border-radius: 20px; }
+        .delete-league-btn { background: #8b3c2c; padding: 2px 8px; font-size: 0.65rem; margin-left: 10px; }
+        .club-stats-view { font-size: 0.75rem; margin-top: 8px; padding-top: 8px; border-top: 1px solid #eef2f8; }
+        .ai-chat-block { margin-top: 0; border-top: none; padding-top: 0; }
+        .ai-response { background: #f0f3f8; border-radius: 20px; padding: 16px; margin-top: 12px; white-space: pre-wrap; font-size: 0.8rem; max-height: 400px; overflow-y: auto; }
+        .ai-error { color: #c0392b; }
+        .ai-header { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; flex-wrap: wrap; }
+        .ai-header h4 { margin: 0; color: #1a1a2e; font-size: 1.1rem; }
+        .ai-badge { background: #f5b042; color: #1a1a2e; padding: 2px 8px; border-radius: 20px; font-size: 0.65rem; font-weight: bold; }
+        .save-indicator { position: fixed; bottom: 20px; right: 20px; background: #2a6b4e; color: white; padding: 8px 16px; border-radius: 40px; font-size: 0.7rem; z-index: 9999; opacity: 0; transition: opacity 0.3s; }
+        .club-selector { margin: 12px 0; padding: 10px; background: #eef2f8; border-radius: 16px; }
+        .club-selector select { width: 100%; margin-top: 5px; }
+        .save-player-btn { background: #2a6b4e; font-size: 0.65rem; padding: 3px 8px; margin-left: 5px; }
+        .ai-full-page { max-width: 900px; margin: 0 auto; }
+        .add-club-btn { background: #2a6b4e; margin-left: 16px; padding: 4px 12px; font-size: 0.7rem; }
     </style>
 </head>
 <body>
-<div class="glass-card">
-    <h1>
-        🎮 Twitch·PURE 
-        <span>встраиваемый плеер</span>
-    </h1>
-    <div class="sub">Вставьте имя любого канала — и смотрите стрим в удобном окне, без лишнего интерфейса Twitch</div>
-
-    <div class="input-panel">
-        <div class="flex-input">
-            <input type="text" id="channelName" class="channel-input" placeholder="Например: sodapoppin, shroud, lirik, robot_obormot или любой другой канал">
-            <button id="watchBtn" class="load-btn">▶ Смотреть сейчас</button>
-        </div>
-        <div class="example-buttons">
-            <span style="color:#6c6f8c; font-size:0.7rem; align-self:center;">⭐ Популярные примеры:</span>
-            <button class="ex-btn" data-channel="sodapoppin">sodapoppin</button>
-            <button class="ex-btn" data-channel="shroud">shroud</button>
-            <button class="ex-btn" data-channel="lirik">lirik</button>
-            <button class="ex-btn" data-channel="gaules">gaules</button>
-            <button class="ex-btn" data-channel="robot_obormot">robot_obormot</button>
-        </div>
-    </div>
-
-    <div class="player-area" id="playerContainer">
-        <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: #0a0a0f; color: #6b6b8f; flex-direction: column; gap: 12px;">
-            <div style="font-size: 3rem;">🎴</div>
-            <div style="font-size: 0.9rem;">Введите имя канала и нажмите «Смотреть сейчас»</div>
-            <div style="font-size: 0.7rem;">— стрим откроется здесь, —</div>
-        </div>
-    </div>
-
-    <div class="info-bar">
-        <div>🔐 <strong>Безопасный режим</strong> — используется <span class="badge">player.twitch.tv</span></div>
-        <div>⚡ <strong>Нет рекламы на встройке</strong> (отключается стандартная навигация)</div>
-        <div>🎯 <strong>Любой канал</strong> — просто введите никнейм</div>
-    </div>
-    <div class="note">
-        ⚠️ Примечание: если канал офлайн — вы увидите сообщение от Twitch. Если стрим идёт — плеер покажет его сразу.<br>
-        🛠️ Для корректной работы в современных браузерах: при локальном открытии файла может потребоваться разрешить «незащищённый контент» или загрузить этот HTML на любой хостинг (GitHub Pages / любой другой).<br>
-        🧪 Совет: при ошибке «Этот объект настроен неправильно» — попробуйте другой браузер (Edge, Firefox) или загрузите файл на бесплатный хостинг (GitHub Pages).
-    </div>
-</div>
+<div id="app"></div>
+<div id="saveIndicator" class="save-indicator">✅ Сохранено!</div>
 
 <script>
-    (function() {
-        const channelInput = document.getElementById('channelName');
-        const watchBtn = document.getElementById('watchBtn');
-        const playerContainer = document.getElementById('playerContainer');
-        const exampleBtns = document.querySelectorAll('.ex-btn');
-
-        // Функция очистки ника: оставляем только латиницу, цифры и нижнее подчёркивание
-        function cleanChannelName(raw) {
-            let cleaned = raw.trim().toLowerCase();
-            // убираем https://, www.twitch.tv/ и тп
-            if (cleaned.includes('twitch.tv')) {
-                const match = cleaned.match(/(?:twitch\.tv\/)([a-zA-Z0-9_]+)/);
-                if (match && match[1]) return match[1];
-            }
-            // убираем косые черты, параметры и всё лишнее
-            cleaned = cleaned.replace(/https?:\/\//i, '').replace(/www\./i, '');
-            cleaned = cleaned.split('/')[0].split('?')[0].split('&')[0];
-            // разрешённые символы для ника twitch
-            cleaned = cleaned.replace(/[^a-z0-9_]/g, '');
-            return cleaned;
+    // ========== РЕЖИМЫ ==========
+    let currentMode = "reader";
+    const CREATOR_PASSWORD = "1111199922993029";
+    
+    // ========== ДАННЫЕ ==========
+    let clubsData = {};
+    let leagues = ["БПЛ", "2 лига"];
+    let leagueClubs = { "БПЛ": [], "2 лига": [] };
+    let stats = {};
+    let newsPosts = [];
+    let highlights = [];
+    let currentSeason = "2025/2026";
+    let seasonsHistory = [];
+    let extraColumnName = "Рейтинг";
+    let extraColumnData = {};
+    
+    // НОВЫЙ API КЛЮЧ (обновлён)
+    const GPT_API_KEY = "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";
+    const AI_MODEL = "openai/gpt-oss-120b:free";
+    
+    const DEFAULT_BPL = ["Skufoboys","Suslikbet","Zabrod","Yantitus","Gerrcelona","Mongols","Ghostiya","Tsukengaster","Rofler United","Reninburg United","Kat","Peygo's Brigade","Mordochkin Union","Tajnyj Il'ya","Gudanov City","Bounchester","Legion IX"];
+    const DEFAULT_LEAGUE2 = ["Metropolitan 24","Fasolkaster","Imperial FC","Gaaga Musketeers","Stepanchuk","Vendi Vipers","Fomiva-Mitrich Albion","Griffins","Wilted Rose","Lashka Rovers","Lexus Galacticos","City Rom4ik","Aleksey Rangers","Kamil House","Red Eye Halil","Pony Hams","FC Grinanda","Stasgrad Giants","Bilyal Wanderers","Zhigul Glory"];
+    const POSITIONS_11 = ["Вратарь","Правый защитник","Левый защитник","Центр. защитник","Опорный пз","Центр. пз","Атакующий пз","Правый вингер","Левый вингер","Нападающий","Центрфорвард"];
+    const TRAINER_STYLES = ["Атакующий", "Оборонительный", "Баланс", "Контратака", "Владение", "Прессинг"];
+    
+    function showSaveIndicator() {
+        let indicator = document.getElementById("saveIndicator");
+        if (indicator) {
+            indicator.style.opacity = "1";
+            setTimeout(() => { indicator.style.opacity = "0"; }, 1500);
         }
-
-        // генерация плеера с правильным PARENT (пытаемся взять текущий домен / localhost / file)
-        function getParentDomain() {
+    }
+    
+    function saveAll() {
+        localStorage.setItem("transferbiz_pro", JSON.stringify({ clubsData, stats, leagues, leagueClubs, newsPosts, highlights, currentSeason, seasonsHistory, extraColumnName, extraColumnData }));
+        localStorage.setItem("transferbiz_mode", currentMode);
+        showSaveIndicator();
+    }
+    
+    function saveCurrentSection(section) {
+        localStorage.setItem("transferbiz_current_section", section);
+    }
+    
+    function loadCurrentSection() {
+        return localStorage.getItem("transferbiz_current_section") || "home";
+    }
+    
+    function loadAll() {
+        let d = localStorage.getItem("transferbiz_pro");
+        let savedMode = localStorage.getItem("transferbiz_mode");
+        if (savedMode === "creator") currentMode = "creator";
+        
+        if(d) { 
+            try { 
+                let p = JSON.parse(d); 
+                clubsData=p.clubsData||{}; 
+                stats=p.stats||{}; 
+                leagues=p.leagues||["БПЛ","2 лига"]; 
+                leagueClubs=p.leagueClubs||{ "БПЛ":DEFAULT_BPL, "2 лига":DEFAULT_LEAGUE2 }; 
+                newsPosts=p.newsPosts||[]; 
+                highlights=p.highlights||[]; 
+                currentSeason=p.currentSeason||"2025/2026"; 
+                seasonsHistory=p.seasonsHistory||[]; 
+                extraColumnName=p.extraColumnName||"Рейтинг"; 
+                extraColumnData=p.extraColumnData||{};
+                return true; 
+            } catch(e){} 
+        }
+        return false;
+    }
+    
+    function initDefaultData() {
+        leagues = ["БПЛ", "2 лига"];
+        leagueClubs = { "БПЛ": [...DEFAULT_BPL], "2 лига": [...DEFAULT_LEAGUE2] };
+        stats = { "БПЛ": {}, "2 лига": {} };
+        clubsData = {};
+        extraColumnData = {};
+        
+        for(let club of [...DEFAULT_BPL, ...DEFAULT_LEAGUE2]) {
+            let league = DEFAULT_BPL.includes(club) ? "БПЛ" : "2 лига";
+            clubsData[club] = {
+                name: club, league: league, emblem: null,
+                stadium: { name: "Городской стадион", capacity: 10000 },
+                trainer: { name: "Тренер", style: "Баланс", experience: 5 },
+                players: [],
+                trophies: { bpl: 0, league2: 0, cup: 0, supercup: 0, lch: 0, le: 0, lk: 0 }
+            };
+            for(let i=0; i<16; i++) {
+                clubsData[club].players.push({
+                    id: Date.now()+i+Math.random(),
+                    name: `Игрок ${i+1}`,
+                    position: POSITIONS_11[i%POSITIONS_11.length],
+                    age: 20+Math.floor(Math.random()*10),
+                    value: Math.floor(Math.random()*25)+3,
+                    rating: 50+Math.floor(Math.random()*40),
+                    goals: Math.floor(Math.random()*10),
+                    assists: Math.floor(Math.random()*8),
+                    photo: null
+                });
+            }
+            stats[league][club] = { played:0, wins:0, draws:0, losses:0, goalsFor:0, goalsAgainst:0, points:0 };
+            extraColumnData[club] = Math.floor(Math.random()*100);
+        }
+        newsPosts = [{ id:1, title:"Старт сезона!", content:"БПЛ стартует 1 июня", date:"01.06.2025" }];
+        highlights = [];
+        seasonsHistory = [{ season: currentSeason, winners: { bpl: "", cup: "", supercup: "" } }];
+        saveAll();
+    }
+    
+    function exportFull() {
+        let data = { clubsData, stats, leagues, leagueClubs, newsPosts, highlights, currentSeason, seasonsHistory, extraColumnName, extraColumnData };
+        let a = document.createElement("a");
+        a.href = URL.createObjectURL(new Blob([JSON.stringify(data)], {type:"application/json"}));
+        a.download = `transferbiz_${Date.now()}.json`;
+        a.click();
+        alert("✅ Экспорт выполнен");
+    }
+    
+    function importFull(file) {
+        let r = new FileReader();
+        r.onload = e => {
             try {
-                // если открыто не из файловой системы — берём хостнейм
-                if (window.location.hostname && window.location.hostname !== '') {
-                    return window.location.hostname;
-                }
-            } catch(e) {}
-            // fallback для локального html: localhost  (часто помогает при локальном тесте)
-            return 'localhost';
+                let p = JSON.parse(e.target.result);
+                if(p.clubsData) clubsData = p.clubsData;
+                if(p.stats) stats = p.stats;
+                if(p.leagues) leagues = p.leagues;
+                if(p.leagueClubs) leagueClubs = p.leagueClubs;
+                if(p.newsPosts) newsPosts = p.newsPosts;
+                if(p.highlights) highlights = p.highlights;
+                if(p.currentSeason) currentSeason = p.currentSeason;
+                if(p.seasonsHistory) seasonsHistory = p.seasonsHistory;
+                if(p.extraColumnName) extraColumnName = p.extraColumnName;
+                if(p.extraColumnData) extraColumnData = p.extraColumnData;
+                saveAll();
+                alert("✅ Импорт выполнен");
+                renderApp();
+            } catch(err) { alert("Ошибка файла"); }
+        };
+        r.readAsText(file);
+    }
+    
+    function triggerImport() {
+        let input = document.createElement("input");
+        input.type = "file";
+        input.accept = "application/json";
+        input.onchange = e => { if(e.target.files[0]) importFull(e.target.files[0]); };
+        input.click();
+    }
+    
+    function switchToCreator() { 
+        let pwd = prompt("Пароль создателя:"); 
+        if(pwd === CREATOR_PASSWORD) { 
+            currentMode = "creator"; 
+            saveAll();
+            alert("Режим создателя"); 
+            renderApp(); 
+        } else alert("Неверно"); 
+    }
+    
+    function switchToReader() { 
+        currentMode = "reader"; 
+        saveAll();
+        renderApp(); 
+    }
+    
+    window.addClubToLeague = function(leagueName) {
+        if (currentMode !== "creator") {
+            alert("Только для создателя");
+            return;
         }
-
-        function loadStream(channel) {
-            const cleanChannel = cleanChannelName(channel);
-            if (!cleanChannel) {
-                playerContainer.innerHTML = `
-                    <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: #0a0a0f; color: #ff8a7a; flex-direction: column;">
-                        <div style="font-size: 2rem;">⚠️</div>
-                        <div>Некорректное имя канала. Попробуйте например: shroud, loltyler1, c9</div>
-                    </div>
-                `;
-                return;
-            }
-
-            // Получаем parent-домен (важно для избежания ошибки «неправильно настроен»)
-            const parentDomain = getParentDomain();
-            
-            // Используем официальный Twitch iframe плеер с параметром parent
-            // Добавляем autoplay=true для попытки автоматического запуска
-            const embedUrl = `https://player.twitch.tv/?channel=${cleanChannel}&parent=${parentDomain}&autoplay=true&muted=false`;
-            
-            // Альтернативный fallback: если не работает, можно использовать ?parent=localhost (но берём текущий)
-            // Также добавим обработку на случай, если плеер не загрузится
-            const iframe = document.createElement('iframe');
-            iframe.src = embedUrl;
-            iframe.allow = "autoplay; encrypted-media; fullscreen; picture-in-picture; web-share";
-            iframe.allowFullscreen = true;
-            iframe.title = `Twitch стрим — ${cleanChannel}`;
-            iframe.setAttribute('frameborder', '0');
-            iframe.setAttribute('scrolling', 'no');
-            
-            // Очищаем контейнер и добавляем плеер
-            playerContainer.innerHTML = '';
-            playerContainer.appendChild(iframe);
-            
-            // также показываем в инфо-зоне какой канал загружен (кратко)
-            const existingNote = document.querySelector('.info-bar');
-            // необязательно, просто дружелюбно
+        
+        let clubName = prompt("Введите название нового клуба:");
+        if (!clubName) return;
+        
+        if (clubsData[clubName]) {
+            alert("Клуб с таким названием уже существует!");
+            return;
         }
-
-        // Обработчик кнопки
-        watchBtn.addEventListener('click', () => {
-            const rawChannel = channelInput.value;
-            if (!rawChannel.trim()) {
-                playerContainer.innerHTML = `
-                    <div style="display: flex; align-items: center; justify-content: center; height: 100%; background: #0a0a0f; color: #ffaa77; flex-direction: column;">
-                        <div style="font-size: 2rem;">🎙️</div>
-                        <div>Введите имя канала! Например: summit1g, ninja, или любой другой стример</div>
-                    </div>
-                `;
-                return;
-            }
-            loadStream(rawChannel);
-        });
-
-        // Примеры по кнопкам
-        exampleBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const channelExample = btn.getAttribute('data-channel');
-                if (channelExample) {
-                    channelInput.value = channelExample;
-                    loadStream(channelExample);
-                }
+        
+        leagueClubs[leagueName].push(clubName);
+        
+        clubsData[clubName] = {
+            name: clubName,
+            league: leagueName,
+            emblem: null,
+            stadium: { name: "Новый стадион", capacity: 8000 },
+            trainer: { name: "Тренер", style: "Баланс", experience: 3 },
+            players: [],
+            trophies: { bpl: 0, league2: 0, cup: 0, supercup: 0, lch: 0, le: 0, lk: 0 }
+        };
+        
+        for(let i = 0; i < 14; i++) {
+            clubsData[clubName].players.push({
+                id: Date.now() + i + Math.random(),
+                name: `Игрок ${i+1}`,
+                position: POSITIONS_11[i % POSITIONS_11.length],
+                age: 20 + Math.floor(Math.random() * 10),
+                value: Math.floor(Math.random() * 25) + 3,
+                rating: 50 + Math.floor(Math.random() * 40),
+                goals: 0,
+                assists: 0,
+                photo: null
             });
+        }
+        
+        stats[leagueName][clubName] = {
+            played: 0, wins: 0, draws: 0, losses: 0,
+            goalsFor: 0, goalsAgainst: 0, points: 0
+        };
+        
+        extraColumnData[clubName] = 0;
+        
+        saveAll();
+        alert(`✅ Клуб "${clubName}" добавлен в лигу "${leagueName}"!`);
+        
+        renderContent(currentSection);
+    };
+    
+    function getClubContext(clubName) {
+        let club = clubsData[clubName];
+        if (!club) return null;
+        let leagueStat = stats[club.league]?.[clubName] || {};
+        let trophies = club.trophies;
+        
+        let leagueName = club.league === "БПЛ" ? "Бизарская Премьер Лига (БПЛ)" : club.league;
+        
+        let context = `=== КЛУБ: ${clubName} ===\n`;
+        context += `Лига: ${leagueName}\n`;
+        context += `Стадион: ${club.stadium.name} (вместимость: ${club.stadium.capacity})\n`;
+        context += `Тренер: ${club.trainer.name}, стиль: ${club.trainer.style}, опыт: ${club.trainer.experience} лет\n`;
+        context += `Трофеи: БПЛ-${trophies.bpl}, 2 лига-${trophies.league2}, Кубок-${trophies.cup}, Суперкубок-${trophies.supercup}, ЛЧ-${trophies.lch}\n`;
+        context += `Статистика сезона: И=${leagueStat.played||0}, В=${leagueStat.wins||0}, Н=${leagueStat.draws||0}, П=${leagueStat.losses||0}, З=${leagueStat.goalsFor||0}, П=${leagueStat.goalsAgainst||0}, О=${leagueStat.points||0}\n`;
+        context += `СОСТАВ (${club.players.length} игроков):\n`;
+        
+        club.players.slice(0, 15).forEach((p, i) => {
+            context += `${i+1}. ${p.name} | ${p.position} | Возраст:${p.age} | Рейтинг:${p.rating} | Голы:${p.goals||0} | Ассисты:${p.assists||0} | Стоимость:${p.value}млн\n`;
         });
-
-        // Поддержка Enter
-        channelInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') {
-                watchBtn.click();
-            }
+        return context;
+    }
+    
+    window.viewClubInfo = function(clubName) {
+        let club = clubsData[clubName];
+        if(!club) return;
+        
+        let playersHtml = `<h3>⚽ Состав клуба</h3><table class="players-table"><thead><th>Фото</th><th>Имя</th><th>Позиция</th><th>Возраст</th><th>Стоимость (млн)</th><th>Голы</th><th>Ассисты</th><th>Рейтинг</th></thead><tbody>`;
+        club.players.forEach(p => {
+            playersHtml += `<tr>
+                <td>${p.photo ? `<img src="${p.photo}" class="player-photo">` : "📷"}</td>
+                <td>${escapeHtml(p.name)}</td>
+                <td>${escapeHtml(p.position)}</td>
+                <td>${p.age}</td>
+                <td>${p.value}</td>
+                <td>${p.goals||0}</td>
+                <td>${p.assists||0}</td>
+                <td>${p.rating||70}</td>
+            </tr>`;
+        });
+        playersHtml += `</tbody><tr>`;
+        
+        let leagueStat = stats[club.league]?.[clubName] || {};
+        let trophies = club.trophies;
+        
+        let modal = document.createElement("div");
+        modal.className = "modal-overlay";
+        modal.innerHTML = `<div class="modal-content">
+            <div style="display:flex; justify-content:space-between; margin-bottom:16px;"><h2>${clubName}</h2><button onclick="this.closest('.modal-overlay').remove()">✕</button></div>
+            <div style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:16px;">
+                <div><strong>Эмблема:</strong> ${club.emblem ? `<img src="${club.emblem}" style="width:60px;height:60px;border-radius:12px;">` : "🏆 Нет эмблемы"}</div>
+                <div><strong>Стадион:</strong> ${club.stadium.name} (${club.stadium.capacity})</div>
+                <div><strong>Тренер:</strong> ${club.trainer.name} (${club.trainer.style}, опыт ${club.trainer.experience} лет)</div>
+            </div>
+            <div><strong>🏆 Трофеи:</strong> БПЛ: ${trophies.bpl} | 2 лига: ${trophies.league2} | Кубок: ${trophies.cup} | Суперкубок: ${trophies.supercup} | ЛЧ: ${trophies.lch} | ЛЕ: ${trophies.le} | ЛК: ${trophies.lk}</div>
+            <div class="club-stats-view"><strong>📊 Статистика в сезоне:</strong> И: ${leagueStat.played||0} | В: ${leagueStat.wins||0} | Н: ${leagueStat.draws||0} | П: ${leagueStat.losses||0} | З: ${leagueStat.goalsFor||0} | П: ${leagueStat.goalsAgainst||0} | О: ${leagueStat.points||0}</div>
+            ${playersHtml}
+            ${currentMode === "creator" ? `<div style="margin-top:16px; text-align:center;"><button onclick="editClubFull('${clubName}')">✏️ Редактировать клуб (только для создателя)</button></div>` : ""}
+        </div>`;
+        document.body.appendChild(modal);
+    };
+    
+    window.saveSinglePlayer = function(clubName, idx) {
+        let c = clubsData[clubName];
+        if (!c || !c.players[idx]) return;
+        
+        let row = document.querySelector(`#playersTable tbody tr:nth-child(${idx+1})`);
+        if (row) {
+            let nameInput = row.querySelector('input[data-field="name"]');
+            let positionSelect = row.querySelector('select[data-field="position"]');
+            let ageInput = row.querySelector('input[data-field="age"]');
+            let valueInput = row.querySelector('input[data-field="value"]');
+            let goalsInput = row.querySelector('input[data-field="goals"]');
+            let assistsInput = row.querySelector('input[data-field="assists"]');
+            let ratingInput = row.querySelector('input[data-field="rating"]');
+            
+            if (nameInput) c.players[idx].name = nameInput.value;
+            if (positionSelect) c.players[idx].position = positionSelect.value;
+            if (ageInput) c.players[idx].age = parseInt(ageInput.value) || 20;
+            if (valueInput) c.players[idx].value = parseFloat(valueInput.value) || 1;
+            if (goalsInput) c.players[idx].goals = parseInt(goalsInput.value) || 0;
+            if (assistsInput) c.players[idx].assists = parseInt(assistsInput.value) || 0;
+            if (ratingInput) c.players[idx].rating = parseInt(ratingInput.value) || 50;
+        }
+        saveAll();
+        alert(`✅ Игрок ${c.players[idx].name} сохранён!`);
+    };
+    
+    window.editClubFull = function(clubName) {
+        if(currentMode !== "creator") { alert("Только для создателя"); return; }
+        let club = clubsData[clubName];
+        if(!club) return;
+        
+        let playersHtml = `<h3>⚽ Состав клуба (редактирование)</h3><table class="players-table" id="playersTable"><thead><th>Фото</th><th>Имя</th><th>Позиция</th><th>Возраст</th><th>Стоимость</th><th>Голы</th><th>Ассисты</th><th>Рейтинг</th><th></th></thead><tbody>`;
+        club.players.forEach((p, idx) => {
+            playersHtml += `<tr>
+                <td>${p.photo ? `<img src="${p.photo}" class="player-photo">` : "📷"}<br><button class="small" onclick="uploadPlayerPhoto('${clubName}',${idx})">📸</button></td>
+                <td><input type="text" value="${escapeHtml(p.name)}" data-field="name" data-idx="${idx}" style="width:100px;"></td>
+                <td><select data-field="position" data-idx="${idx}" style="width:130px;">${POSITIONS_11.map(pos=>`<option ${p.position===pos?'selected':''}>${pos}</option>`).join('')}</select></td>
+                <td><input type="number" value="${p.age}" data-field="age" data-idx="${idx}" style="width:55px;"></td>
+                <td><input type="number" step="0.5" value="${p.value}" data-field="value" data-idx="${idx}" style="width:60px;"></td>
+                <td><input type="number" value="${p.goals||0}" data-field="goals" data-idx="${idx}" style="width:50px;"></td>
+                <td><input type="number" value="${p.assists||0}" data-field="assists" data-idx="${idx}" style="width:50px;"></td>
+                <td><input type="number" min="1" max="99" value="${p.rating||70}" data-field="rating" data-idx="${idx}" style="width:55px;"></td>
+                <td><button class="success save-player-btn" onclick="saveSinglePlayer('${clubName}',${idx})">💾 Сохранить</button>\n<button class="danger" onclick="removePlayer('${clubName}',${idx})">🗑️</button></td>
+            </tr>`;
+        });
+        playersHtml += `</tbody></tr></div>
+            <div style="margin-top:16px; background:#f0f3f8; padding:12px; border-radius:20px;">
+                <h4>➕ Добавить игрока</h4>
+                <input type="text" id="newPlayerName" placeholder="Имя" style="width:120px;">
+                <select id="newPlayerPos">${POSITIONS_11.map(p=>`<option>${p}</option>`).join('')}</select>
+                <input type="number" id="newPlayerAge" placeholder="Возраст" style="width:70px;">
+                <input type="number" id="newPlayerValue" placeholder="Стоимость" style="width:80px;">
+                <input type="number" id="newPlayerRating" placeholder="Рейтинг" style="width:70px;">
+                <button onclick="addNewPlayer('${clubName}')">✅ Добавить</button>
+            </div>`;
+        
+        let modal = document.createElement("div");
+        modal.className = "modal-overlay";
+        modal.innerHTML = `<div class="modal-content">
+            <div style="display:flex; justify-content:space-between; margin-bottom:16px;"><h2>${clubName}</h2><button onclick="this.closest('.modal-overlay').remove()">✕</button></div>
+            <div style="display:flex; gap:20px; flex-wrap:wrap; margin-bottom:16px;">
+                <div><strong>Эмблема:</strong> ${club.emblem ? `<img src="${club.emblem}" style="width:60px;height:60px;border-radius:12px;">` : "Нет"} <button onclick="uploadClubEmblem('${clubName}')">📸 Загрузить</button></div>
+                <div><strong>Стадион:</strong> <input type="text" id="stadiumName" value="${club.stadium.name}" style="width:150px;"> <input type="number" id="stadiumCap" value="${club.stadium.capacity}" style="width:80px;"></div>
+                <div><strong>Тренер:</strong> <input type="text" id="trainerName" value="${club.trainer.name}" style="width:120px;"> <select id="trainerStyle">${TRAINER_STYLES.map(s=>`<option ${club.trainer.style===s?'selected':''}>${s}</option>`).join('')}</select> <input type="number" id="trainerExp" value="${club.trainer.experience}" style="width:60px;"></div>
+            </div>
+            <div><strong>🏆 Трофеи:</strong> БПЛ: <input type="number" id="trophyBpl" value="${club.trophies.bpl}" style="width:60px;"> 2 лига: <input type="number" id="trophyLeague2" value="${club.trophies.league2}" style="width:60px;"> Кубок: <input type="number" id="trophyCup" value="${club.trophies.cup}" style="width:60px;"> Суперкубок: <input type="number" id="trophySuper" value="${club.trophies.supercup}" style="width:60px;"> ЛЧ: <input type="number" id="trophyLch" value="${club.trophies.lch}" style="width:60px;"> ЛЕ: <input type="number" id="trophyLe" value="${club.trophies.le}" style="width:60px;"> ЛК: <input type="number" id="trophyLk" value="${club.trophies.lk}" style="width:60px;"></div>
+            <button onclick="saveClubGeneral('${clubName}')" class="success" style="margin:12px 0;">💾 Сохранить данные клуба</button>
+            ${playersHtml}
+            <button onclick="saveClubPlayers('${clubName}')" class="success" style="margin-top:16px;">💾 Сохранить ВСЕХ игроков</button>
+        </div>`;
+        document.body.appendChild(modal);
+    };
+    
+    window.saveClubGeneral = function(clubName) {
+        let c = clubsData[clubName];
+        if (!c) return;
+        
+        let stadiumNameInput = document.getElementById("stadiumName");
+        let stadiumCapInput = document.getElementById("stadiumCap");
+        let trainerNameInput = document.getElementById("trainerName");
+        let trainerStyleSelect = document.getElementById("trainerStyle");
+        let trainerExpInput = document.getElementById("trainerExp");
+        
+        if (stadiumNameInput) c.stadium.name = stadiumNameInput.value;
+        if (stadiumCapInput) c.stadium.capacity = parseInt(stadiumCapInput.value) || 1000;
+        if (trainerNameInput) c.trainer.name = trainerNameInput.value;
+        if (trainerStyleSelect) c.trainer.style = trainerStyleSelect.value;
+        if (trainerExpInput) c.trainer.experience = parseInt(trainerExpInput.value) || 1;
+        
+        c.trophies = {
+            bpl: parseInt(document.getElementById("trophyBpl")?.value) || 0,
+            league2: parseInt(document.getElementById("trophyLeague2")?.value) || 0,
+            cup: parseInt(document.getElementById("trophyCup")?.value) || 0,
+            supercup: parseInt(document.getElementById("trophySuper")?.value) || 0,
+            lch: parseInt(document.getElementById("trophyLch")?.value) || 0,
+            le: parseInt(document.getElementById("trophyLe")?.value) || 0,
+            lk: parseInt(document.getElementById("trophyLk")?.value) || 0
+        };
+        
+        saveAll();
+        alert("✅ Данные клуба сохранены!");
+        
+        let modal = document.querySelector(".modal-overlay");
+        if (modal) modal.remove();
+        
+        viewClubInfo(clubName);
+    };
+    
+    window.saveClubPlayers = function(clubName) {
+        let c = clubsData[clubName];
+        if (!c) return;
+        
+        let rows = document.querySelectorAll("#playersTable tbody tr");
+        
+        rows.forEach((row, idx) => {
+            if (idx >= c.players.length) return;
+            
+            let nameInput = row.querySelector('input[data-field="name"]');
+            let positionSelect = row.querySelector('select[data-field="position"]');
+            let ageInput = row.querySelector('input[data-field="age"]');
+            let valueInput = row.querySelector('input[data-field="value"]');
+            let goalsInput = row.querySelector('input[data-field="goals"]');
+            let assistsInput = row.querySelector('input[data-field="assists"]');
+            let ratingInput = row.querySelector('input[data-field="rating"]');
+            
+            if (nameInput) c.players[idx].name = nameInput.value;
+            if (positionSelect) c.players[idx].position = positionSelect.value;
+            if (ageInput) c.players[idx].age = parseInt(ageInput.value) || 20;
+            if (valueInput) c.players[idx].value = parseFloat(valueInput.value) || 1;
+            if (goalsInput) c.players[idx].goals = parseInt(goalsInput.value) || 0;
+            if (assistsInput) c.players[idx].assists = parseInt(assistsInput.value) || 0;
+            if (ratingInput) c.players[idx].rating = parseInt(ratingInput.value) || 50;
         });
         
-        // при загрузке страницы в поле можно оставить пустым — ничего не загружаем. Но если кто-то захочет, ок.
-        // дополнительная фича: если в URL параметр ?channel=
-        const urlParams = new URLSearchParams(window.location.search);
-        const autoChannel = urlParams.get('channel');
-        if (autoChannel) {
-            channelInput.value = autoChannel;
-            loadStream(autoChannel);
+        saveAll();
+        alert("✅ Весь состав сохранён!");
+        
+        let modal = document.querySelector(".modal-overlay");
+        if (modal) modal.remove();
+        
+        viewClubInfo(clubName);
+    };
+    
+    window.removePlayer = function(clubName, idx) {
+        if(confirm("Удалить игрока?")) {
+            clubsData[clubName].players.splice(idx, 1);
+            saveAll();
+            document.querySelector(".modal-overlay")?.remove();
+            editClubFull(clubName);
         }
-    })();
+    };
+    
+    window.addNewPlayer = function(clubName) {
+        let name = document.getElementById("newPlayerName")?.value || "Новичок";
+        let pos = document.getElementById("newPlayerPos")?.value;
+        let age = parseInt(document.getElementById("newPlayerAge")?.value) || 22;
+        let value = parseFloat(document.getElementById("newPlayerValue")?.value) || 5;
+        let rating = parseInt(document.getElementById("newPlayerRating")?.value) || 65;
+        clubsData[clubName].players.push({
+            id: Date.now()+Math.random(),
+            name: name, position: pos || "Нападающий", age: age, value: value, rating: rating,
+            goals: 0, assists: 0, photo: null
+        });
+        saveAll();
+        document.querySelector(".modal-overlay")?.remove();
+        editClubFull(clubName);
+    };
+    
+    window.uploadPlayerPhoto = function(clubName, idx) {
+        let inp = document.createElement("input");
+        inp.type = "file";
+        inp.accept = "image/*";
+        inp.onchange = e => {
+            let f = e.target.files[0];
+            if(f) {
+                let r = new FileReader();
+                r.onload = ev => {
+                    clubsData[clubName].players[idx].photo = ev.target.result;
+                    saveAll();
+                    document.querySelector(".modal-overlay")?.remove();
+                    editClubFull(clubName);
+                };
+                r.readAsDataURL(f);
+            }
+        };
+        inp.click();
+    };
+    
+    window.uploadClubEmblem = function(clubName) {
+        let inp = document.createElement("input");
+        inp.type = "file";
+        inp.accept = "image/*";
+        inp.onchange = e => {
+            let f = e.target.files[0];
+            if(f) {
+                let r = new FileReader();
+                r.onload = ev => {
+                    clubsData[clubName].emblem = ev.target.result;
+                    saveAll();
+                    document.querySelector(".modal-overlay")?.remove();
+                    editClubFull(clubName);
+                };
+                r.readAsDataURL(f);
+            }
+        };
+        inp.click();
+    };
+    
+    window.editClubStats = function(leagueName, clubName) {
+        if(currentMode !== "creator") return;
+        let s = stats[leagueName][clubName];
+        let newPlayed = prompt("Сыграно матчей:", s.played);
+        let newWins = prompt("Побед:", s.wins);
+        let newDraws = prompt("Ничьих:", s.draws);
+        let newLosses = prompt("Поражений:", s.losses);
+        let newGF = prompt("Забито:", s.goalsFor);
+        let newGA = prompt("Пропущено:", s.goalsAgainst);
+        if(newPlayed !== null) s.played = parseInt(newPlayed) || 0;
+        if(newWins !== null) s.wins = parseInt(newWins) || 0;
+        if(newDraws !== null) s.draws = parseInt(newDraws) || 0;
+        if(newLosses !== null) s.losses = parseInt(newLosses) || 0;
+        if(newGF !== null) s.goalsFor = parseInt(newGF) || 0;
+        if(newGA !== null) s.goalsAgainst = parseInt(newGA) || 0;
+        s.points = (s.wins * 5) + (s.draws * 3);
+        saveAll();
+        renderContent(currentSection);
+    };
+    
+    function renderTable(leagueName) {
+        let leagueStat = stats[leagueName] || {};
+        let clubs = leagueClubs[leagueName] || [];
+        let sorted = [...clubs].sort((a,b) => (leagueStat[b]?.points||0) - (leagueStat[a]?.points||0));
+        let displayName = leagueName === "БПЛ" ? "Бизарская Премьер Лига (БПЛ)" : leagueName;
+        
+        let addButton = (currentMode === "creator") ? 
+            `<button class="add-club-btn" onclick="addClubToLeague('${leagueName}')">➕ Добавить клуб в эту лигу</button>` : "";
+        
+        let html = `<div class="info-card"><h3>${displayName} ${addButton}</h3><table class="league-table"><thead><th>#</th><th>Клуб</th><th>И</th><th>В</th><th>Н</th><th>П</th><th>З</th><th>П</th><th>О</th><th>${escapeHtml(extraColumnName)}</th></thead><tbody>`;
+        sorted.forEach((c, idx) => {
+            let s = leagueStat[c] || {};
+            html += `<tr>
+                <td>${idx+1}</td>
+                <td class="club-name-link" onclick="viewClubInfo('${c}')">${c}${currentMode==="creator"?`<button class="edit-stats-btn" onclick="event.stopPropagation();editClubStats('${leagueName}','${c}')">✏️</button>`:""}</td>
+                <td>${s.played||0}</td>
+                <td>${s.wins||0}</td>
+                <td>${s.draws||0}</td>
+                <td>${s.losses||0}</td>
+                <td>${s.goalsFor||0}</td>
+                <td>${s.goalsAgainst||0}</td>
+                <td><b>${s.points||0}</b></td>
+                <td>${extraColumnData[c] || 0}</td>
+            </td>`;
+        });
+        html += `</tbody></table></div>`;
+        return html;
+    }
+    
+    function renderClubs() {
+        let all = [];
+        for(let l of leagues) all.push(...(leagueClubs[l]||[]));
+        let html = `<div class="info-card"><h3>🏟️ Все клубы (нажмите для просмотра состава)</h3><div class="clubs-grid">`;
+        all.forEach(c => {
+            let club = clubsData[c];
+            let totalGoals = club.players.reduce((sum,p)=>sum+(p.goals||0),0);
+            let totalAssists = club.players.reduce((sum,p)=>sum+(p.assists||0),0);
+            html += `<div class="club-card" onclick="viewClubInfo('${c}')">
+                ${club.emblem ? `<img src="${club.emblem}" class="club-emblem-small">` : `<div class="club-emblem-small" style="display:flex;align-items:center;justify-content:center;">🏆</div>`}
+                <div><b>${c}</b><div>🏆 ${club.league === "БПЛ" ? "Бизарская Премьер Лига" : club.league}</div><div>🏟️ ${club.stadium.name}</div><div>⚽ Голы: ${totalGoals} | Ассисты: ${totalAssists}</div><div>⭐ Рейтинг команды: ${Math.round(club.players.reduce((s,p)=>s+(p.rating||70),0)/club.players.length)||0}</div></div>
+            </div>`;
+        });
+        html += `</div></div>`;
+        return html;
+    }
+    
+    function renderNews() {
+        let addForm = currentMode === "creator" ? `<div style="background:#f0f3f8;padding:16px;border-radius:20px;margin-bottom:20px;"><h4>➕ Добавить новость</h4><input type="text" id="newsTitle" placeholder="Заголовок"><textarea id="newsContent" placeholder="Текст" rows="2"></textarea><button onclick="addNews()">Опубликовать</button></div>` : "";
+        return `<div class="info-card"><h3>📰 Новости</h3>${addForm}<div>${newsPosts.map(n=>`<div class="news-item"><h4>${escapeHtml(n.title)}</h4><p>${escapeHtml(n.content)}</p><div style="color:#888;">${n.date}</div></div>`).join('')}</div></div>`;
+    }
+    window.addNews = function() { if(currentMode!=="creator") return; let title=document.getElementById("newsTitle")?.value, content=document.getElementById("newsContent")?.value; if(!title||!content) return; newsPosts.unshift({ id:Date.now(), title, content, date:new Date().toLocaleString() }); saveAll(); renderContent("news"); };
+    
+    let activeMethod = "file";
+    
+    function renderHighlights() {
+        let addForm = currentMode === "creator" ? `
+        <div style="background:#f0f3f8;padding:16px;border-radius:20px;margin-bottom:20px;">
+            <h4>➕ Добавить видео в хайлаты</h4>
+            <div class="add-methods">
+                <div class="method-tab ${activeMethod === 'file' ? 'active' : ''}" onclick="setMethod('file')">📁 Загрузить файл</div>
+                <div class="method-tab ${activeMethod === 'link' ? 'active' : ''}" onclick="setMethod('link')">🔗 По ссылке (YouTube/Vimeo)</div>
+            </div>
+            <div id="fileMethodPanel" class="method-panel ${activeMethod === 'file' ? 'active' : ''}">
+                <input type="file" id="videoFile" accept="video/*" style="width:100%;">
+                <div id="uploadProgressContainer" style="margin-top:8px; display:none;">
+                    <span id="uploadPercent">0%</span>
+                    <div class="progress-bar-container"><div class="progress-bar-fill" id="progressFill"></div></div>
+                </div>
+            </div>
+            <div id="linkMethodPanel" class="method-panel ${activeMethod === 'link' ? 'active' : ''}">
+                <input type="text" id="videoLink" placeholder="Вставьте ссылку на видео (YouTube, Vimeo, любое видео в интернете)" style="width:100%;">
+            </div>
+            <input type="text" id="videoCaption" placeholder="Описание видео" style="width:100%; margin-top:8px;">
+            <button onclick="addVideo()" style="margin-top:12px;">📹 Добавить видео</button>
+        </div>` : "";
+        
+        return `<div class="info-card"><h3>🎬 Хайлаты (лучшие моменты)</h3>${addForm}<div class="highlights-grid" id="highlightsGrid">${highlights.length===0?"<p>Пока нет видео. Добавьте первый хайлат!</p>":highlights.map(h=>`<div class="highlight-card">${h.type === 'link' ? `<iframe class="highlight-video" src="${h.url}" frameborder="0" allowfullscreen></iframe>` : `<video class="highlight-video" controls src="${h.url}"></video>`}<div class="highlight-caption"><span>${escapeHtml(h.caption)}</span>${currentMode==="creator"?`<button onclick="removeVideo(${h.id})" class="danger">🗑️</button>`:""}</div></div>`).join('')}</div></div>`;
+    }
+    
+    function renderAIPage() {
+        let clubOptions = "";
+        for (let club in clubsData) {
+            clubOptions += `<option value="${escapeHtml(club)}">${escapeHtml(club)} (${clubsData[club].league === "БПЛ" ? "Бизарская Премьер Лига" : clubsData[club].league})</option>`;
+        }
+        
+        let aiTitle = currentMode === "creator" ? "🤖 Админ ИИ" : "🤖 РенИИ";
+        let aiBadge = currentMode === "creator" ? "Админ ИИ" : "РенИИ";
+        let description = currentMode === "creator" 
+            ? "Административная ИИ-система для анализа клубов, состава игроков и стратегического планирования."
+            : "ИИ-ассистент для анализа футбольных клубов, оценки состава и получения рекомендаций.";
+        
+        return `<div class="info-card ai-full-page">
+            <div class="ai-header">
+                <h4>${aiTitle}</h4>
+                <span class="ai-badge">${aiBadge}</span>
+            </div>
+            <p style="margin-bottom: 16px; color: #555;">${description}</p>
+            <div class="club-selector">
+                <label>📋 Выберите клуб для анализа:</label>
+                <select id="aiClubSelect">
+                    <option value="">-- Без контекста (общий вопрос) --</option>
+                    ${clubOptions}
+                </select>
+            </div>
+            <textarea id="aiQuestion" rows="3" placeholder="Спросите ИИ о футболе, клубах, стратегии, аналитике..." style="width:100%; border-radius:16px; font-size:0.85rem;">Проанализируй мой клуб: сильные и слабые стороны, дай рекомендации по усилению</textarea>
+            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin: 12px 0;">
+                <button id="askAiBtn" style="background:#2a6b4e;">💬 Спросить ИИ</button>
+                <button id="analyzeClubBtn" style="background:#f5b042; color:#1a1a2e;">📊 Анализ клуба</button>
+                <button id="clearChatBtn" style="background:#6c757d;">🗑️ Очистить диалог</button>
+            </div>
+            <div id="aiResult" class="ai-response" style="margin-top:12px; min-height:150px;">💡 Выберите клуб и задайте вопрос о его составе, статистике или развитии...</div>
+        </div>`;
+    }
+    
+    window.setMethod = function(method) {
+        activeMethod = method;
+        let tabs = document.querySelectorAll('.method-tab');
+        let panels = document.querySelectorAll('.method-panel');
+        if (tabs.length && panels.length) {
+            tabs.forEach(tab => tab.classList.remove('active'));
+            panels.forEach(panel => panel.classList.remove('active'));
+            if(method === 'file') {
+                if(tabs[0]) tabs[0].classList.add('active');
+                let filePanel = document.getElementById('fileMethodPanel');
+                if(filePanel) filePanel.classList.add('active');
+            } else {
+                if(tabs[1]) tabs[1].classList.add('active');
+                let linkPanel = document.getElementById('linkMethodPanel');
+                if(linkPanel) linkPanel.classList.add('active');
+            }
+        }
+    };
+    
+    window.addVideo = function() {
+        if(currentMode !== "creator") return;
+        
+        let caption = document.getElementById("videoCaption")?.value || "";
+        
+        if(activeMethod === 'file') {
+            let fileInput = document.getElementById("videoFile");
+            let file = fileInput.files[0];
+            if(!file) { alert("Выберите видеофайл"); return; }
+            if(!file.type.includes("video")) { alert("Выберите видеофайл (MP4, WebM, OGG)"); return; }
+            if(file.size > 100 * 1024 * 1024) { alert("Файл слишком большой (максимум 100 МБ)"); return; }
+            
+            let progressContainer = document.getElementById("uploadProgressContainer");
+            let percentSpan = document.getElementById("uploadPercent");
+            let progressFill = document.getElementById("progressFill");
+            if(progressContainer) progressContainer.style.display = "block";
+            if(percentSpan) percentSpan.innerText = "0%";
+            if(progressFill) progressFill.style.width = "0%";
+            
+            let reader = new FileReader();
+            reader.onprogress = function(e) {
+                if(e.lengthComputable && percentSpan && progressFill) {
+                    let percent = Math.round((e.loaded / e.total) * 100);
+                    percentSpan.innerText = percent + "%";
+                    progressFill.style.width = percent + "%";
+                }
+            };
+            reader.onload = function(e) {
+                highlights.push({
+                    id: Date.now(),
+                    url: e.target.result,
+                    caption: caption,
+                    type: "file",
+                    fileName: file.name
+                });
+                saveAll();
+                renderContent("highlights");
+                alert("✅ Видео добавлено!");
+                if(progressContainer) progressContainer.style.display = "none";
+                if(fileInput) fileInput.value = "";
+            };
+            reader.onerror = function() {
+                alert("Ошибка при чтении файла");
+                if(progressContainer) progressContainer.style.display = "none";
+            };
+            reader.readAsDataURL(file);
+        } else {
+            let link = document.getElementById("videoLink")?.value.trim();
+            if(!link) { alert("Введите ссылку на видео"); return; }
+            let embedUrl = link;
+            if(link.includes("youtube.com/watch?v=")) {
+                let videoId = link.split("v=")[1].split("&")[0];
+                embedUrl = `https://www.youtube.com/embed/${videoId}`;
+            } else if(link.includes("youtu.be/")) {
+                let videoId = link.split("youtu.be/")[1].split("?")[0];
+                embedUrl = `https://www.youtube.com/embed/${videoId}`;
+            } else if(link.includes("vimeo.com/")) {
+                let videoId = link.split("vimeo.com/")[1].split("?")[0];
+                embedUrl = `https://player.vimeo.com/video/${videoId}`;
+            }
+            highlights.push({
+                id: Date.now(),
+                url: embedUrl,
+                caption: caption,
+                type: "link",
+                originalLink: link
+            });
+            saveAll();
+            renderContent("highlights");
+            alert("✅ Видео по ссылке добавлено!");
+            let videoLinkInput = document.getElementById("videoLink");
+            if(videoLinkInput) videoLinkInput.value = "";
+        }
+        let videoCaptionInput = document.getElementById("videoCaption");
+        if(videoCaptionInput) videoCaptionInput.value = "";
+    };
+    
+    window.removeVideo = function(id) {
+        if(currentMode === "creator") {
+            highlights = highlights.filter(h => h.id !== id);
+            saveAll();
+            renderContent("highlights");
+        }
+    };
+    
+    function renderCup() {
+        let last = seasonsHistory[seasonsHistory.length-1];
+        let cupWinner = last?.winners?.cup || "—";
+        let supercupWinner = last?.winners?.supercup || "—";
+        let historyHtml = `<h4>📜 История</h4><table class="league-table"><thead><th>Сезон</th><th>Чемпион БПЛ</th><th>Кубок</th><th>Суперкубок</th></thead><tbody>`;
+        [...seasonsHistory].reverse().forEach(sh => { historyHtml += `<tr>
+                <td>${sh.season}</td>
+                <td>${sh.winners.bpl||"—"}</td>
+                <td>${sh.winners.cup||"—"}</td>
+                <td>${sh.winners.supercup||"—"}</td>
+            </tr>`; });
+        historyHtml += `</tbody></table>`;
+        let setForm = currentMode === "creator" ? `<div style="background:#f0f3f8;padding:16px;border-radius:20px;margin-bottom:20px;"><h4>🏆 Установить победителей</h4><input type="text" id="setCup" placeholder="Кубок"><input type="text" id="setSuper" placeholder="Суперкубок"><button onclick="setCupWinners()">✅ Сохранить</button></div>` : "";
+        return `<div class="info-card"><h3>🏆 Кубок и Суперкубок</h3>${setForm}<p><strong>Кубок:</strong> ${cupWinner}</p><p><strong>Суперкубок:</strong> ${supercupWinner}</p>${historyHtml}</div>`;
+    }
+    window.setCupWinners = function() { if(currentMode!=="creator") return; let cup=document.getElementById("setCup")?.value, supercup=document.getElementById("setSuper")?.value; if(seasonsHistory.length===0) seasonsHistory.push({ season: currentSeason, winners: {} }); if(cup) seasonsHistory[seasonsHistory.length-1].winners.cup = cup; if(supercup) seasonsHistory[seasonsHistory.length-1].winners.supercup = supercup; saveAll(); renderContent("cup"); };
+    
+    function renderAdmin() {
+        if(currentMode !== "creator") return `<div class="info-card"><h3>🔒 Админ-панель доступна только создателю</h3><button onclick="switchToCreator()">Войти как создатель</button></div>`;
+        return `<div class="info-card"><h3>🛠️ Админ-панель</h3>
+            <div class="admin-row"><div class="admin-card"><h4>🏆 Лиги и клубы</h4><button onclick="addNewLeague()">➕ Добавить лигу</button><button onclick="addNewClub()">➕ Добавить клуб</button><button onclick="moveClub()">🔄 Переместить клуб</button><button onclick="nextSeason()" class="success">➡️ Новый сезон</button></div>
+            <div class="admin-card"><h4>📊 Доп. столбец</h4><input type="text" id="extraName" placeholder="Название" value="${extraColumnName}"><select id="extraClub">${Object.keys(clubsData).map(c=>`<option>${c}</option>`).join('')}</select><input type="text" id="extraVal" placeholder="Значение"><button onclick="updateExtra()">✏️ Изменить</button></div>
+            <div class="admin-card"><h4>📦 Данные</h4><button onclick="exportFull()">📤 Экспорт</button><button onclick="triggerImport()">📥 Импорт</button><button onclick="initDefaultData()" class="danger">🔄 Сброс к стандарту</button></div></div>
+            <div class="admin-card"><h4>🗑️ Удаление лиг</h4>${leagues.map(l => `<div class="league-item"><span>${l === "БПЛ" ? "Бизарская Премьер Лига (БПЛ)" : l}</span><button class="delete-league-btn" onclick="deleteLeague('${l}')">Удалить лигу</button></div>`).join('')}</div>
+        </div>`;
+    }
+    
+    window.deleteLeague = function(leagueName) {
+        if(leagueName === "БПЛ" || leagueName === "2 лига") {
+            alert("Нельзя удалить основные лиги (Бизарская Премьер Лига и 2 лига)");
+            return;
+        }
+        if(confirm(`Удалить лигу "${leagueName}"? Все клубы из этой лиги будут удалены!`)) {
+            for(let club of (leagueClubs[leagueName] || [])) {
+                delete clubsData[club];
+                delete extraColumnData[club];
+            }
+            delete leagueClubs[leagueName];
+            delete stats[leagueName];
+            leagues = leagues.filter(l => l !== leagueName);
+            saveAll();
+            alert(`Лига ${leagueName} удалена`);
+            renderApp();
+        }
+    };
+    
+    window.updateExtra = function() { let name=document.getElementById("extraName")?.value, club=document.getElementById("extraClub")?.value, val=document.getElementById("extraVal")?.value; if(name) extraColumnName=name; if(club && val) extraColumnData[club]=val; saveAll(); renderContent("admin"); if(currentSection==="bpl"||currentSection==="league2") renderContent(currentSection); alert("Обновлено"); };
+    
+    function addNewLeague() {
+        let name = prompt("Название лиги");
+        if(name && !leagues.includes(name)) {
+            leagues.push(name);
+            leagueClubs[name] = [];
+            stats[name] = {};
+            saveAll();
+            alert(`Лига ${name} добавлена`);
+            renderApp();
+        } else alert("Ошибка или лига существует");
+    }
+    
+    function addNewClub() {
+        let league = prompt("Лига: " + leagues.join(", "));
+        if(!league || !leagueClubs[league]) return;
+        let name = prompt("Название клуба");
+        if(!name || clubsData[name]) return;
+        leagueClubs[league].push(name);
+        clubsData[name] = { name: name, league: league, emblem: null, stadium: { name: "Новый стадион", capacity: 8000 }, trainer: { name: "Тренер", style: "Баланс", experience: 3 }, players: [], trophies: { bpl:0, league2:0, cup:0, supercup:0, lch:0, le:0, lk:0 } };
+        for(let i=0;i<14;i++) clubsData[name].players.push({ id:Date.now()+i, name:`Игрок ${i+1}`, position:POSITIONS_11[i%POSITIONS_11.length], age:20, value:5, rating:60, goals:0, assists:0, photo:null });
+        stats[league][name] = { played:0, wins:0, draws:0, losses:0, goalsFor:0, goalsAgainst:0, points:0 };
+        extraColumnData[name] = 0;
+        saveAll();
+        alert(`Клуб ${name} добавлен`);
+        renderApp();
+    }
+    
+    function moveClub() {
+        let club = prompt("Клуб для перемещения");
+        if(!clubsData[club]) return;
+        let newLeague = prompt("Новая лига: " + leagues.join(", "));
+        if(!newLeague || !leagueClubs[newLeague]) return;
+        let oldLeague = clubsData[club].league;
+        leagueClubs[oldLeague] = leagueClubs[oldLeague].filter(c => c !== club);
+        leagueClubs[newLeague].push(club);
+        clubsData[club].league = newLeague;
+        delete stats[oldLeague][club];
+        stats[newLeague][club] = { played:0, wins:0, draws:0, losses:0, goalsFor:0, goalsAgainst:0, points:0 };
+        saveAll();
+        alert(`${club} перемещён`);
+        renderApp();
+    }
+    
+    function nextSeason() {
+        let bplWinner = Object.entries(stats["БПЛ"] || {}).sort((a,b)=>b[1].points-a[1].points)[0]?.[0] || "";
+        let cupWinner = prompt("Победитель Кубка");
+        let supercupWinner = prompt("Победитель Суперкубка");
+        seasonsHistory.push({ season: currentSeason, winners: { bpl: bplWinner, cup: cupWinner, supercup: supercupWinner } });
+        for(let l of leagues) for(let c in stats[l]) stats[l][c] = { played:0, wins:0, draws:0, losses:0, goalsFor:0, goalsAgainst:0, points:0 };
+        let [start, end] = currentSeason.split("/");
+        currentSeason = `${parseInt(start)+1}/${parseInt(end)+1}`;
+        saveAll();
+        alert(`Новый сезон ${currentSeason}`);
+        renderContent("home");
+    }
+    
+    function renderHome() {
+        let total = 0;
+        for(let l of leagues) total += (leagueClubs[l]||[]).length;
+        return `<div class="info-card"><h2>⚽ TRANSFERBIZ PRO</h2><p>Режим: <b>${currentMode === "creator" ? "Создатель" : "Читатель"}</b></p><p>📊 Лиг: ${leagues.length} | Клубов: ${total} | Сезон: ${currentSeason}</p><p>🏆 Бизарская Премьер Лига (БПЛ) — главная футбольная лига!</p><button onclick="switchToCreator()">👑 Войти как создатель</button><button onclick="switchToReader()">📖 Режим читателя</button></div>
+        <div class="info-card"><h3>🏆 Лиги</h3>${leagues.map(l=>`<p>• ${l === "БПЛ" ? "Бизарская Премьер Лига (БПЛ)" : l} — ${(leagueClubs[l]||[]).length} клубов</p>`).join('')}</div>`;
+    }
+    
+    let currentSection = "home";
+    function renderContent(s) {
+        currentSection = s;
+        saveCurrentSection(s);
+        let c = document.getElementById("mainContent");
+        if(!c) return;
+        if(s === "home") c.innerHTML = renderHome();
+        else if(s === "bpl") c.innerHTML = renderTable("БПЛ");
+        else if(s === "league2") c.innerHTML = renderTable("2 лига");
+        else if(s === "clubs") c.innerHTML = renderClubs();
+        else if(s === "news") c.innerHTML = renderNews();
+        else if(s === "highlights") c.innerHTML = renderHighlights();
+        else if(s === "cup") c.innerHTML = renderCup();
+        else if(s === "ai") c.innerHTML = renderAIPage();
+        else if(s === "admin") c.innerHTML = renderAdmin();
+        else if(leagues.includes(s)) c.innerHTML = renderTable(s);
+        else c.innerHTML = `<div class="info-card">Раздел</div>`;
+        
+        setTimeout(() => {
+            const askBtn = document.getElementById("askAiBtn");
+            const analyzeBtn = document.getElementById("analyzeClubBtn");
+            const clearBtn = document.getElementById("clearChatBtn");
+            if(askBtn) askBtn.onclick = () => askAI(false);
+            if(analyzeBtn) analyzeBtn.onclick = () => askAI(true);
+            if(clearBtn) clearBtn.onclick = () => {
+                const resultDiv = document.getElementById("aiResult");
+                if(resultDiv) resultDiv.innerHTML = "💡 Диалог очищен. Выберите клуб и задайте новый вопрос.";
+            };
+        }, 50);
+    }
+    
+    async function askAI(isAnalysisMode = false) {
+        const questionInput = document.getElementById("aiQuestion");
+        const clubSelect = document.getElementById("aiClubSelect");
+        const resultDiv = document.getElementById("aiResult");
+        
+        let question = questionInput?.value.trim();
+        const selectedClub = clubSelect?.value;
+        
+        if (isAnalysisMode && selectedClub) {
+            question = `Проанализируй мой клуб "${selectedClub}". Оцени сильные и слабые стороны состава, дай рекомендации по усилению команды, оцени тактику тренера и дай советы по развитию.`;
+            if(questionInput) questionInput.value = question;
+        }
+        
+        if (!question) {
+            resultDiv.innerHTML = '<span class="ai-error">❌ Напишите вопрос для ИИ</span>';
+            return;
+        }
+        
+        resultDiv.innerHTML = '🤔 Анализирую данные клуба... ⏳';
+        
+        let systemPrompt = 'Ты эксперт по футболу и менеджменту клубов. Знай что БПЛ - это Бизарская Премьер Лига (BiZar Premier League), элитная футбольная лига. Отвечай кратко, живо и с юмором, если уместно. Используй только русский язык.';
+        let userPrompt = question;
+        
+        if (selectedClub && clubsData[selectedClub]) {
+            const clubContext = getClubContext(selectedClub);
+            if (clubContext) {
+                systemPrompt = `Ты эксперт по футболу. Знай что БПЛ - это Бизарская Премьер Лига (BiZar Premier League).\nВот полные данные о клубе "${selectedClub}":\n${clubContext}\n\nОтвечай на вопросы пользователя, используя эту информацию. Давай конкретные советы. Отвечай ТОЛЬКО на русском языке.`;
+                userPrompt = `Учитывая данные клуба "${selectedClub}", ответь: ${question}`;
+            }
+        }
+        
+        try {
+            const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${GPT_API_KEY}`
+                },
+                body: JSON.stringify({
+                    model: AI_MODEL,
+                    messages: [
+                        { role: 'system', content: systemPrompt },
+                        { role: 'user', content: userPrompt }
+                    ],
+                    max_tokens: 800
+                })
+            });
+            
+            if (!response.ok) {
+                const errorText = await response.text();
+                throw new Error(`HTTP ${response.status}: ${errorText.substring(0, 150)}`);
+            }
+            
+            const data = await response.json();
+            const answer = data.choices?.[0]?.message?.content || '⚠️ Не удалось получить ответ от ИИ';
+            const contextInfo = selectedClub ? ` (анализ клуба ${selectedClub})` : "";
+            const modelName = currentMode === "creator" ? "Админ ИИ" : "РенИИ";
+            resultDiv.innerHTML = `✅ <strong>${modelName} ответил${contextInfo}:</strong><br>${escapeHtml(answer)}`;
+        } catch (err) {
+            console.error("AI API Error:", err);
+            resultDiv.innerHTML = `<span class="ai-error">❌ Ошибка: ${escapeHtml(err.message)}</span><br><small>Проверьте подключение к интернету.</small>`;
+        }
+    }
+    
+    function renderApp() {
+        document.getElementById("app").innerHTML = `<div class="app-wrapper"><div class="header"><div class="logo"><h1>TRANSFERBIZ PRO</h1><p>${currentMode==="creator"?"создатель":"читатель"}</p></div><div class="header-buttons"><button onclick="exportFull()" style="background:#2a6b4e;">📤 Экспорт</button><button onclick="triggerImport()" style="background:#3a5a6e;">📥 Импорт</button></div><div class="user-mode">👤 ${currentMode==="creator"?"Создатель":"Читатель"} ${currentMode!=="creator"?`<button onclick="switchToCreator()">Войти</button>`:`<button onclick="switchToReader()">Выйти</button>`}</div></div><div class="flex-row"><div class="side-menu" id="sideMenu"></div><div class="content-area" id="mainContent"></div></div><footer>⚽ TRANSFERBIZ PRO — Бизарская Премьер Лига | 🤖 ИИ анализирует клубы | Режим сохраняется после обновления</footer></div>`;
+        
+        let sections = ["home", "bpl", "league2", ...leagues.filter(l=>l!=="БПЛ" && l!=="2 лига"), "clubs", "news", "highlights", "ai", "cup"];
+        let names = ["🏠 Главная", "🏆 БПЛ (Бизарская)", "📋 2 лига", ...leagues.filter(l=>l!=="БПЛ" && l!=="2 лига").map(l=>`📋 ${l}`), "🏟️ Клубы", "📰 Новости", "🎬 Хайлаты", "🤖 ИИ Аналитика", "🏆 Кубок"];
+        if(currentMode === "creator") { sections.push("admin"); names.push("🛠️ Админ"); }
+        
+        let menu = document.getElementById("sideMenu");
+        menu.innerHTML = "";
+        sections.forEach((s, i) => {
+            let a = document.createElement("a");
+            a.innerText = names[i];
+            a.setAttribute("data-section", s);
+            a.onclick = () => { 
+                document.querySelectorAll(".side-menu a").forEach(l=>l.classList.remove("active")); 
+                a.classList.add("active"); 
+                renderContent(s); 
+            };
+            menu.appendChild(a);
+        });
+        
+        let lastSection = loadCurrentSection();
+        if (sections.includes(lastSection)) {
+            renderContent(lastSection);
+            let activeLink = Array.from(menu.children).find(a => a.getAttribute("data-section") === lastSection);
+            if (activeLink) activeLink.classList.add("active");
+        } else {
+            renderContent("home");
+            if(menu.children[0]) menu.children[0].classList.add("active");
+        }
+    }
+    
+    if(!loadAll()) initDefaultData();
+    function escapeHtml(str) { if(!str) return ''; return str.replace(/[&<>]/g, m=> m==='&'?'&amp;': m==='<'?'&lt;': m==='>'?'&gt;': m); }
+    renderApp();
 </script>
 </body>
 </html>
